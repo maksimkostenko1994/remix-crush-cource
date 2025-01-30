@@ -1,11 +1,5 @@
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { todoService } from "~/services/todo.server";
-
-// GET - Fetch all todos
-export async function loader({ request }: LoaderFunctionArgs) {
-    const todos = await todoService.getAllTodos();
-    return Response.json(todos);
-}
+import type {ActionFunctionArgs} from "@remix-run/node";
+import {todoService} from "~/services/todo.server";
 
 // POST - Create new todo
 // PUT - Update todo
@@ -33,8 +27,8 @@ export async function action({ request }: ActionFunctionArgs) {
 
             if (typeof id !== "string" || !id) {
                 return Response.json(
-                    { error: "ID is required" },
-                    { status: 400 }
+                    {error: "ID is required"},
+                    {status: 400}
                 );
             }
 
@@ -42,8 +36,8 @@ export async function action({ request }: ActionFunctionArgs) {
                 const todo = await todoService.toggleTodo(id);
                 if (!todo) {
                     return Response.json(
-                        { error: "Todo not found" },
-                        { status: 404 }
+                        {error: "Todo not found"},
+                        {status: 404}
                     );
                 }
                 return Response.json(todo);
@@ -51,8 +45,8 @@ export async function action({ request }: ActionFunctionArgs) {
 
             // Handle other update cases if needed
             return Response.json(
-                { error: "Invalid action" },
-                { status: 400 }
+                {error: "Invalid action"},
+                {status: 400}
             );
         }
 
@@ -60,25 +54,25 @@ export async function action({ request }: ActionFunctionArgs) {
             const id = formData.get("id");
             if (typeof id !== "string" || !id) {
                 return Response.json(
-                    { error: "ID is required" },
-                    { status: 400 }
+                    {error: "ID is required"},
+                    {status: 400}
                 );
             }
 
             const success = await todoService.deleteTodo(id);
             if (!success) {
                 return Response.json(
-                    { error: "Todo not found" },
-                    { status: 404 }
+                    {error: "Todo not found"},
+                    {status: 404}
                 );
             }
-            return Response.json({ success: true });
+            return Response.json({success: true});
         }
 
         default:
             return Response.json(
-                { error: "Method not allowed" },
-                { status: 405 }
+                {error: "Method not allowed"},
+                {status: 405}
             );
     }
 }

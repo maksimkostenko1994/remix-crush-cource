@@ -1,10 +1,8 @@
-// app/routes/_index.tsx
-import { useLoaderData, useFetcher } from "@remix-run/react";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { TodoForm, TodoList } from "~/components/todo";
-import { todoService } from "~/services/todo.server";
+import {useFetcher, useLoaderData} from "@remix-run/react";
+import {TodoForm, TodoList} from "~/components/todo";
+import {todoService} from "~/services/todo.server";
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader() {
     // Add artificial delay to make loading state visible
     await new Promise(resolve => setTimeout(resolve, 500));
     const todos = await todoService.getAllTodos();
